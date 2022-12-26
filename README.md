@@ -1,0 +1,11 @@
+# Project name
+
+This is a project template, please replace this text with a description of your project.
+I'm not an expert within python packaging so feel free to suggest improvements.
+The goal of this template is to provide a simple template with my most common confugurations.
+
+## Installation
+
+## Contributing
+
+_See [CONTRIBUTING.md](CONTRIBUTING.md)_

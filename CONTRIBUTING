@@ -1,0 +1,25 @@
+# Project Name
+
+## Setup development environment
+
+### Linux
+
+```bash
+python3 -m venv .venv --prompt <project-name>
+source .venv/bin/activate
+pip install -e .[dev]
+```
+
+### Windows
+
+```ps1
+py -3 -m venv .venv --prompt <project-name>
+.venv\Scripts\activate
+pip install -e .[dev]
+```
+
+## Way of working
+
+## Open issues
+
+see [issues](TBD)

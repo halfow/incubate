@@ -1,0 +1,100 @@
+# -------------------------------------------------------------------------------------------------
+# Build metadata
+# -------------------------------------------------------------------------------------------------
+[project]
+name = "project-name"
+description = "A template project"
+version = "0.1.0"
+
+requires-python = ">=3.10"
+dependencies = [
+    "rich",
+]
+
+keywords = [
+    "template",
+]
+
+[project.license]
+file = "LICENSE"
+
+
+[project.optional-dependencies]
+dev = [ # Development dependencies
+    "black",                      # code formatter
+    "isort",                      # code formatter
+    "mypy",                       # type checker
+    "pylint",                     # linter
+    "pytest",                     # test runner
+    "tox",                        # test runner
+    "scalene",                    # profiler
+    "pre-commit",                 # git pre-commit hooks
+    "coverage",                   # code coverage
+    "coverage_enable_subprocess", # coverage for subprocesses
+]
+all = [ # Optional dependencies for extended featuers
+]
+
+[project.scripts]
+# list of scripts to be installed in the bin folder
+
+[project.entry-points]
+# Entypoints accessible from importlib.metadata.entry_points()
+
+# -------------------------------------------------------------------------------------------------
+# Authors and maintainers
+# -------------------------------------------------------------------------------------------------
+[[project.authors]]
+name = "jon doe"
+email = "jon@doe.com"
+
+[[project.maintainers]]
+name = "jane doe"
+email = "jon@doe.com"
+
+# -------------------------------------------------------------------------------------------------
+# Build system settings
+# -------------------------------------------------------------------------------------------------
+[build-system]
+requires = ["setuptools", "wheel", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[tool.distutils.bdist_wheel]
+universal = true
+
+[tool.setuptools.packages.find]
+# list of folders that contain the packages (["."] by default)
+where = ["."]
+# package names should match these glob patterns (["*"] by default)
+include = [
+    "src", # TODO: change this to your package name, this is the name that will be stored in site-packages
+]
+# exclude packages matching these glob patterns (empty by default)
+exclude = [
+    "test*",
+]
+namespaces = false # to disable scanning PEP 420 namespaces (true by default)
+
+# -------------------------------------------------------------------------------------------------
+# Linter and formatter settings
+# -------------------------------------------------------------------------------------------------
+[tool.black]
+line-length = 120
+
+[tool.isort]
+line_length = 120
+
+[tool.pylint]
+max-line-length = 120
+
+[tool.mypy]
+#
+
+[tool.coverage.report]
+fail_under = 100
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+]
