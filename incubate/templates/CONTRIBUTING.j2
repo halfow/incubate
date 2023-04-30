@@ -1,11 +1,13 @@
-# Project Name
+# {{ project }}
 
+{%- block tldr %}
+{% endblock %}
 ## Setup development environment
 
 ### Linux
 
 ```bash
-python3 -m venv .venv --prompt <project-name>
+python3 -m venv .venv --prompt {{ project }}
 source .venv/bin/activate
 pip install -e .[dev]
 ```
@@ -13,7 +15,7 @@ pip install -e .[dev]
 ### Windows
 
 ```ps1
-py -3 -m venv .venv --prompt <project-name>
+py -3 -m venv .venv --prompt {{ project }}
 .venv\Scripts\activate
 pip install -e .[dev]
 ```

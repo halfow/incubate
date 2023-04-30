@@ -1,0 +1,9 @@
+{% extends "pyproject.toml.j2" %}
+
+{% block dependencies %}
+    "fastapi",
+    "uvicorn",
+    "python-jose[cryptography]",
+    "passlib[bcrypt]",
+    "python-dotenv",
+{% endblock %}

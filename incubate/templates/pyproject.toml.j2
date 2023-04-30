@@ -2,36 +2,30 @@
 # Build system settings
 # -------------------------------------------------------------------------------------------------
 [build-system]
+{%- block build_system %}
 requires = ["setuptools", "wheel", "setuptools-scm[toml]"]
 build-backend = "setuptools.build_meta"
 
 [tool.distutils.bdist_wheel]
 universal = true
 
-[tool.setuptools]
-include-package-data = true
-
-[tool.setuptools.package-data]
-incubate = ["templates/**/*.j2"]
-
 [tool.setuptools.packages.find]
-where = ["."]
-exclude = ["test"]
+where = ["src"]
 namespaces = false # to disable scanning PEP 420 namespaces (true by default)
-
+{% endblock %}
 # -------------------------------------------------------------------------------------------------
 # Build metadata
 # -------------------------------------------------------------------------------------------------
 [project]
-name = "incubate"
-description = ""
+name = "{{ project }}"
+description = "{{ description }}"
 dynamic = ["version"]
 
 requires-python = ">=3.10"
 dependencies = [
+{%- block dependencies %}
     "rich",
-    "inquirer",
-    "jinja2",
+{%- endblock %}
 ]
 
 keywords = ["template"]
@@ -49,6 +43,7 @@ text = "LICENSE"
 
 [project.optional-dependencies]
 dev = [ # Development dependencies
+    {% block development -%}
     "black",                      # code formatter
     "coverage_enable_subprocess", # coverage for subprocesses
     "coverage",                   # code coverage
@@ -58,23 +53,26 @@ dev = [ # Development dependencies
     "ruff",                       # code lint/formatter
     "scalene",                    # profiler
     "tox",                        # test runner
+    {%- endblock %}
 ]
 
-
+{% block scripts -%}
 [project.scripts]
-incubate = "incubate.__main__:main"
-
+{{ project }} = "{{ project }}.__main__:main"
+{%- endblock %}
 
 # -------------------------------------------------------------------------------------------------
 # Authors and maintainers
 # -------------------------------------------------------------------------------------------------
 [[project.authors]]
-name = "Benjamin Hallenrud"
+name = "{{ author }}"
+email = "{{ email }}"
 
 
 # -------------------------------------------------------------------------------------------------
 # Linter and formatter settings
 # -------------------------------------------------------------------------------------------------
+{% block tools -%}
 [tool.black]
 line-length = 120
 
@@ -83,3 +81,4 @@ line-length = 120
 select = [
     "I001"  # isort
 ]
+{%- endblock %}

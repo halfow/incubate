@@ -1,11 +1,13 @@
-# Project name
+# Incubate your new ideas with a quick start
 
-This is a project template, please replace this text with a description of your project.
-I'm not an expert within python packaging so feel free to suggest improvements.
-The goal of this template is to provide a simple template with my most common confugurations.
+Scaffolding like tool for new python projects.
 
 ## Installation
 
-## Contributing
+```bash
+pipx install git+https://github.com/halfow/pyproject.git
+```
 
-_See [CONTRIBUTING.md](CONTRIBUTING.md)_
+## Usage
+
+Simply run `incubate` where you want to create a new project. And follow the instructions.
