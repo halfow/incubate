@@ -8,7 +8,7 @@ pipx installation is recommended.
 
 ```bash
 pipx install git+https://github.com/halfow/pyproject.git
-pipx install pre-commit # This is a dependency for the hatched project 
+pipx install pre-commit # This is a dependency for the hatched project
 ```
 
 For regular pip installation:

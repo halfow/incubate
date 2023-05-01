@@ -7,7 +7,7 @@ import inquirer
 from rich import print
 
 from . import static, tree, validate
-                                                                                 
+
 
 def main():
     print(static.logo)
