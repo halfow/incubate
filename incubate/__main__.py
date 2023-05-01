@@ -1,3 +1,6 @@
+import subprocess
+from functools import partial
+from importlib.metadata import version
 from pathlib import Path
 
 import inquirer
@@ -7,6 +10,29 @@ from . import static, tree, validate
 
 
 def main():
+    print(
+        f"""
+            ████████
+          ██        ██
+        ██▒▒▒▒        ██
+      ██▒▒▒▒▒▒      ▒▒▒▒██
+      ██▒▒▒▒▒▒      ▒▒▒▒██      ▄█    ▄   ▄█▄      ▄   ███   ██      ▄▄▄▄▀ ▄███▄
+    ██  ▒▒▒▒        ▒▒▒▒▒▒██    ██     █  █▀ ▀▄     █  █  █  █ █  ▀▀▀ █    █▀   ▀
+    ██                ▒▒▒▒██    ██ ██   █ █   ▀  █   █ █ ▀ ▄ █▄▄█     █    ██▄▄
+  ██▒▒      ▒▒▒▒▒▒          ██  ▐█ █ █  █ █▄  ▄▀ █   █ █  ▄▀ █  █    █     █▄   ▄▀
+  ██      ▒▒▒▒▒▒▒▒▒▒        ██   ▐ █  █ █ ▀███▀  █▄ ▄█ ███      █   ▀      ▀███▀
+  ██      ▒▒▒▒▒▒▒▒▒▒    ▒▒▒▒██     █   ██         ▀▀▀          █
+  ██▒▒▒▒  ▒▒▒▒▒▒▒▒▒▒  ▒▒▒▒▒▒██                                ▀
+    ██▒▒▒▒  ▒▒▒▒▒▒    ▒▒▒▒██
+    ██▒▒▒▒            ▒▒▒▒██      [bold cyan]v{version('incubate')}[/bold cyan]
+      ██▒▒              ██
+        ████        ████
+            ████████
+        """.replace(
+            "▒", "[green]▒[/green]"
+        )
+    )
+
     answers = inquirer.prompt(
         [
             inquirer.Text(
@@ -28,6 +54,10 @@ def main():
                 choices=static.projects,
             ),
             inquirer.Text(
+                "description",
+                message="Description",
+            ),
+            inquirer.Text(
                 "author",
                 message="Author",
                 default=static.author,
@@ -37,10 +67,6 @@ def main():
                 message="Email",
                 validate=validate.email,
                 default=static.email,
-            ),
-            inquirer.Text(
-                "description",
-                message="Description",
             ),
             inquirer.List(
                 "license",
@@ -57,23 +83,40 @@ def main():
     project_type = answers["type"]
     templates = static.templates.list_templates(filter_func=lambda x: x.startswith(f"projects/{project_type}"))
 
+    for template in templates:
+        path = Path(static.templates.from_string(template).render(**answers))
+        new = Path(project_name, *path.parts[2:-1], path.stem)
+        if new.exists():
+            print(f"[bold yellow]Skipping[/bold yellow] '{new!s}' as it already exists")
+        else:
+            new.parent.mkdir(parents=True, exist_ok=True)
+            new.write_text(static.templates.get_template(template).render(**answers))
+
     print(
         "Created Project",
         f"[bold magenta]{project_name}[/bold magenta]",
         "from",
         f"[dim magenta]{project_type}[/dim magenta]",
         "template",
+        tree.walk(project_name),
+        "\n",
     )
-    for template in templates:
-        p = Path(static.templates.from_string(template).render(**answers))
-        final = Path(project_name, *p.parts[2:-1], p.stem)
-        final.parent.mkdir(parents=True, exist_ok=True)
-        if final.exists():
-            print(f"[bold yellow]Skipping[/bold yellow] '{final!s}' as it already exists")
-        else:
-            final.write_text(static.templates.get_template(template).render(**answers))
 
-    print(tree.walk(project_name))
+    if answers["confirm"]:
+        return 0
+
+    # This should only run for new projects
+    # TODO: Make it so that the user may provide a function to run here instead
+    run = partial(subprocess.run, check=True, cwd=project_name)
+    run_quiet = partial(subprocess.run, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, cwd=project_name)
+
+    run(["git", "init"])
+    run(["pre-commit", "install"])
+    run(["pre-commit", "autoupdate"])
+    run_quiet(["git", "add", "--all"])
+    run_quiet(["pre-commit", "run", "--all"])
+    run_quiet(["git", "add", "--all"])
+    run(["git", "commit", "-m", "Initial commit"])
 
 
 if __name__ == "__main__":

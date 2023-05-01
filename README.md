@@ -1,6 +1,6 @@
 # Incubate your new ideas with a quick start
 
-Scaffolding like tool for new python projects.
+Scaffolding like tool for new python projects that assumes you use git.
 
 ## Installation
 

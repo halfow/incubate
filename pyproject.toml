@@ -32,6 +32,7 @@ dependencies = [
     "rich",
     "inquirer",
     "jinja2",
+    "pre-commit",
 ]
 
 keywords = ["template"]
@@ -53,7 +54,6 @@ dev = [ # Development dependencies
     "coverage_enable_subprocess", # coverage for subprocesses
     "coverage",                   # code coverage
     "mypy",                       # type checker
-    "pre-commit",                 # git pre-commit hooks
     "pytest",                     # test runner
     "ruff",                       # code lint/formatter
     "scalene",                    # profiler
