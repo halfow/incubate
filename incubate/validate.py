@@ -4,7 +4,8 @@ from inquirer import errors
 
 
 def cname(answers, current):
-    pattern = re.compile(r"^[a-zA-Z0-9_]+$")
+    # TODO: what is the python name restriction?
+    pattern = re.compile(r"^[a-zA-Z_][a-zA-Z0-9_]*$")
     if pattern.match(current):
         return True
 
