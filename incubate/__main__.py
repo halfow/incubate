@@ -7,31 +7,10 @@ import inquirer
 from rich import print
 
 from . import static, tree, validate
-
+                                                                                 
 
 def main():
-    print(
-        f"""
-            ████████
-          ██        ██
-        ██▒▒▒▒        ██
-      ██▒▒▒▒▒▒      ▒▒▒▒██
-      ██▒▒▒▒▒▒      ▒▒▒▒██      ▄█    ▄   ▄█▄      ▄   ███   ██      ▄▄▄▄▀ ▄███▄
-    ██  ▒▒▒▒        ▒▒▒▒▒▒██    ██     █  █▀ ▀▄     █  █  █  █ █  ▀▀▀ █    █▀   ▀
-    ██                ▒▒▒▒██    ██ ██   █ █   ▀  █   █ █ ▀ ▄ █▄▄█     █    ██▄▄
-  ██▒▒      ▒▒▒▒▒▒          ██  ▐█ █ █  █ █▄  ▄▀ █   █ █  ▄▀ █  █    █     █▄   ▄▀
-  ██      ▒▒▒▒▒▒▒▒▒▒        ██   ▐ █  █ █ ▀███▀  █▄ ▄█ ███      █   ▀      ▀███▀
-  ██      ▒▒▒▒▒▒▒▒▒▒    ▒▒▒▒██     █   ██         ▀▀▀          █
-  ██▒▒▒▒  ▒▒▒▒▒▒▒▒▒▒  ▒▒▒▒▒▒██                                ▀
-    ██▒▒▒▒  ▒▒▒▒▒▒    ▒▒▒▒██
-    ██▒▒▒▒            ▒▒▒▒██      [bold cyan]v{version('incubate')}[/bold cyan]
-      ██▒▒              ██
-        ████        ████
-            ████████
-        """.replace(
-            "▒", "[green]▒[/green]"
-        )
-    )
+    print(static.logo)
 
     answers = inquirer.prompt(
         [
@@ -43,7 +22,7 @@ def main():
             # Check if the project name exists already
             inquirer.Confirm(
                 name="confirm",
-                message="The project name already exists, do you want to continue?",
+                message="The project name already exists, do you want to continue? (This will overwrite existing files)",
                 ignore=lambda x: not Path(x["project"]).exists(),
                 default=False,
                 validate=validate.quit,
@@ -87,10 +66,10 @@ def main():
         path = Path(static.templates.from_string(template).render(**answers))
         new = Path(project_name, *path.parts[2:-1], path.stem)
         if new.exists():
-            print(f"[bold yellow]Skipping[/bold yellow] '{new!s}' as it already exists")
-        else:
-            new.parent.mkdir(parents=True, exist_ok=True)
-            new.write_text(static.templates.get_template(template).render(**answers))
+            print(f"[bold yellow]Overwriting[/bold yellow] '{new!s}'")
+
+        new.parent.mkdir(parents=True, exist_ok=True)
+        new.write_text(static.templates.get_template(template).render(**answers))
 
     print(
         "Created Project",
@@ -102,6 +81,7 @@ def main():
         "\n",
     )
 
+    # NOTE: Exit befor initial setup if the project already exists
     if answers["confirm"]:
         return 0
 
