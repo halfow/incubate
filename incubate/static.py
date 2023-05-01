@@ -26,22 +26,22 @@ with subprocess.Popen(["git", "config", "user.email"], stdout=subprocess.PIPE, e
     email = process.stdout.read().strip()
     # TODO: Add a fallback to the system email if git config is not set
 
-color = choice(["[yellow]▓[/yellow]","[red]▓[/red]","[green]▓[/green]","[blue]▓[/blue]","[magenta]▓[/magenta]"])
+color = choice(["[yellow]█[/yellow]","[red]█[/red]","[green]█[/green]","[blue]█[/blue]","[magenta]█[/magenta]"])
 logo =  f"""
-            [black on white]████████[/black on white]
-          [black on white]██        ██[/black on white]
-        [black on white]██▒▒▒▒        ██[/black on white]                                                                                                             
-      [black on white]██▒▒▒▒▒▒      ▒▒▒▒██[/black on white]                                                                                                                 
-    [black on white]██  ▒▒▒▒        ▒▒▒▒▒▒██[/black on white]
-    [black on white]██                ▒▒▒▒██[/black on white]     ▄█         ▄▄           ▄▄   ▄█      ▄▄▄▄▀ ▄▄▄▄
-  [black on white]██▒▒      ▒▒▒▒▒▒          ██[/black on white]   ██     █  █▀ ▀▄     ▄  █  █  █ █  ▀▀▀ █   ▐█   ▀
-  [black on white]██      ▒▒▒▒▒▒▒▒▒▒        ██[/black on white]   ██ ██   █ █   ▀  █   █ █ ▀ ▄ █▄▄█     █   ▐█▀▀
-  [black on white]██      ▒▒▒▒▒▒▒▒▒▒    ▒▒▒▒██[/black on white]   ▐█ █ █  █ █▄  ▄▀ █   █ █  ▄▀ █  █    █    ▀█▄▄▄▀
-  [black on white]██▒▒▒▒  ▒▒▒▒▒▒▒▒▒▒  ▒▒▒▒▒▒██[/black on white]    ▐ █  █ █ ▀███▀  █▄ ▄█  ▀▀      █   ▀       
-    [black on white]██▒▒▒▒  ▒▒▒▒▒▒    ▒▒▒▒██[/black on white]        █   ██         ▀▀▀          ▀    [bold cyan]v{version('incubate')}[/bold cyan]
-      [black on white]██▒▒              ██[/black on white]          ▀         
-        [black on white]████        ████[/black on white]          
-            [black on white]████████[/black on white]                   
+            [grey0 on white]████████[/grey0 on white]
+          [grey0 on white]██        ██[/grey0 on white]
+        [grey0 on white]██▒▒▒▒        ██[/grey0 on white]                                                                                                             
+      [grey0 on white]██▒▒▒▒▒▒      ▒▒▒▒██[/grey0 on white]                                                                                                                 
+    [grey0 on white]██  ▒▒▒▒        ▒▒▒▒▒▒██[/grey0 on white]
+    [grey0 on white]██                ▒▒▒▒██[/grey0 on white]     ▄█         ▄▄           ▄▄   ▄█      ▄▄▄▄▀ ▄▄▄▄
+  [grey0 on white]██▒▒      ▒▒▒▒▒▒          ██[/grey0 on white]   ██     █  █▀ ▀▄     ▄  █  █  █ █  ▀▀▀ █   ▐█   ▀
+  [grey0 on white]██      ▒▒▒▒▒▒▒▒▒▒        ██[/grey0 on white]   ██ ██   █ █   ▀  █   █ █ ▀ ▄ █▄▄█     █   ▐█▀▀
+  [grey0 on white]██      ▒▒▒▒▒▒▒▒▒▒    ▒▒▒▒██[/grey0 on white]   ▐█ █ █  █ █▄  ▄▀ █   █ █  ▄▀ █  █    █    ▀█▄▄▄▀
+  [grey0 on white]██▒▒▒▒  ▒▒▒▒▒▒▒▒▒▒  ▒▒▒▒▒▒██[/grey0 on white]    ▐ █  █ █ ▀███▀  █▄ ▄█  ▀▀      █   ▀       
+    [grey0 on white]██▒▒▒▒  ▒▒▒▒▒▒    ▒▒▒▒██[/grey0 on white]        █   ██         ▀▀▀          ▀    [bold cyan]v{version('incubate')}[/bold cyan]
+      [grey0 on white]██▒▒              ██[/grey0 on white]          ▀         
+        [grey0 on white]████        ████[/grey0 on white]          
+            [grey0 on white]████████[/grey0 on white]                   
 """.replace("▒", color)
 
 if __name__ == "__main__":
