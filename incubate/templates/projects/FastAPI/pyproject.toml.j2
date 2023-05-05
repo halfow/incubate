@@ -1,9 +1,18 @@
 {% extends "pyproject.toml.j2" %}
 
+{% block build_system %}
+{{ suoer() }}
+where = ["src"]
+
 {% block dependencies %}
     "fastapi",
     "uvicorn",
     "python-jose[cryptography]",
     "passlib[bcrypt]",
     "python-dotenv",
+    "python-multipart",
+{% endblock %}
+
+{% block scripts %}
+{{ project }} = "app.__main__:main"
 {% endblock %}

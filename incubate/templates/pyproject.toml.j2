@@ -1,8 +1,8 @@
 # -------------------------------------------------------------------------------------------------
 # Build system settings
 # -------------------------------------------------------------------------------------------------
-[build-system]
 {%- block build_system %}
+[build-system]
 requires = ["setuptools", "wheel", "setuptools-scm[toml]"]
 build-backend = "setuptools.build_meta"
 
@@ -10,7 +10,6 @@ build-backend = "setuptools.build_meta"
 universal = true
 
 [tool.setuptools.packages.find]
-where = ["src"]
 namespaces = false # to disable scanning PEP 420 namespaces (true by default)
 {% endblock %}
 # -------------------------------------------------------------------------------------------------
@@ -31,7 +30,7 @@ dependencies = [
 keywords = ["template"]
 
 classifiers = [
-    "License :: OSI Approved :: MIT License",
+    {# "License :: OSI Approved :: MIT License", -#}
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -56,8 +55,8 @@ dev = [ # Development dependencies
     {%- endblock %}
 ]
 
-{% block scripts -%}
 [project.scripts]
+{% block scripts -%}
 {{ project }} = "{{ project }}.__main__:main"
 {%- endblock %}
 
