@@ -31,6 +31,7 @@ requires-python = ">=3.10"
 dependencies = [
     "rich",
     "inquirer",
+    "email-validator",
     "jinja2",
     "pre-commit",
 ]

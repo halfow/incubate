@@ -23,6 +23,7 @@ dynamic = ["version"]
 requires-python = ">=3.10"
 dependencies = [
 {%- block dependencies %}
+    "argcomplete",
     "rich",
 {%- endblock %}
 ]
@@ -57,7 +58,7 @@ dev = [ # Development dependencies
 
 [project.scripts]
 {% block scripts -%}
-{{ project }} = "{{ project }}.__main__:main"
+{{ project | replace("_", "-") }} = "{{ project }}.__main__:main"
 {%- endblock %}
 
 # -------------------------------------------------------------------------------------------------

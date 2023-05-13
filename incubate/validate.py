@@ -1,12 +1,20 @@
-import re
+from string import ascii_letters, digits
 
+from email_validator import EmailNotValidError, validate_email
 from inquirer import errors
 
 
-def cname(answers, current):
-    # TODO: what is the python name restriction?
-    pattern = re.compile(r"^[a-zA-Z_][a-zA-Z0-9_]*$")
-    if pattern.match(current):
+def project_name(answers, current):
+    bad_start = set(digits)
+    bad_start.update("_")
+    allowed = set(ascii_letters)
+    allowed.update(bad_start)
+    checks = [
+        allowed.issuperset(current),
+        current[0] not in bad_start,
+        current[-1] != "_",
+    ]
+    if all(checks):
         return True
 
     raise errors.ValidationError(
@@ -16,8 +24,7 @@ def cname(answers, current):
 
 
 def email(answers, current):
-    pattern = re.compile(r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
-    if pattern.match(current):
+    if validate_email(current):
         return True
 
     raise errors.ValidationError(

@@ -1,2 +1,55 @@
+# PYTHON_ARGCOMPLETE_OK
+"""
+Text used for the description of the program. EDIT ME!
+"""
+from argparse import (
+    ArgumentParser,
+    RawDescriptionHelpFormatter,
+)
+from pathlib import Path
+from textwrap import dedent
+
+from argcomplete import (
+    ChoicesCompleter,
+    DirectoriesCompleter,
+    EnvironCompleter,
+    FilesCompleter,
+    autocomplete,
+)
+
+from .scripts import complete, run
+
+
 def main():
-    print("Hello, World!")
+    parser_root = ArgumentParser(description=dedent(__doc__), formatter_class=RawDescriptionHelpFormatter)
+
+    # Subparsers ======================================================================================================
+    parser_child = parser_root.add_subparsers(dest="subparser_name", required=True)
+
+    # Complete --------------------------------------------------------------------------------------------------------
+    shells = "bash", "zsh", "fish", "powershell"
+    parser_complete = parser_child.add_parser(
+        "complete",
+        description=dedent(complete.__doc__),
+        formatter_class=RawDescriptionHelpFormatter,
+    )
+    parser_complete.add_argument("--shell", default="bash").completer = ChoicesCompleter(shells)
+
+    # Run -------------------------------------------------------------------------------------------------------------
+    parser_run = parser_child.add_parser(
+        "run",
+        description=dedent(run.__doc__),
+        formatter_class=RawDescriptionHelpFormatter,
+    )
+    parser_run.add_argument("--directory", type=Path).completer = DirectoriesCompleter()
+    parser_run.add_argument("--path", type=Path).completer = FilesCompleter(("py",))
+    parser_run.add_argument("--env").completer = EnvironCompleter
+
+    # Parse ===========================================================================================================
+    autocomplete(parser_root, always_complete_options="long")
+    args = parser_root.parse_args()
+    return eval(args.subparser_name)(**vars(args))
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -17,7 +17,7 @@ def main():
             inquirer.Text(
                 "project",
                 message="Project name",
-                validate=validate.cname,
+                validate=validate.project_name,
             ),
             # Check if the project name exists already
             inquirer.Confirm(

@@ -1,0 +1,32 @@
+"""
+CLI runnable scripts
+
+See __main__.py for more information
+"""
+from argcomplete import shellcode
+
+
+def complete(shell, **_):
+    """
+    Command completion for your shell.
+
+    Supported shells are limited to argcomplete's supported shells.
+    See https://kislyuk.github.io/argcomplete/index.html?highlight=shells#support-for-other-shells
+
+    Examples:
+        eval "$({{ project | replace("_", "-") }} complete --shell bash)"
+        eval "$({{ project | replace("_", "-") }} complete --shell zsh)"
+        {{ project | replace("_", "-") }} complete --shell powershell | Out-String | Invoke-Expression
+        {{ project | replace("_", "-") }} complete --shell fish | source
+    """
+    if text := shellcode(executables=["{{ project | replace("_", "-") }}"], shell=shell):
+        print(text)
+    else:
+        return 1
+
+
+def run(**kwargs):
+    """
+    Your script's entry point.
+    """
+    print(kwargs)

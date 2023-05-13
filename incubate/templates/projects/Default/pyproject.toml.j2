@@ -1,1 +1,6 @@
 {% extends "pyproject.toml.j2" %}
+
+{%- block build_system %}
+{{ super() }}
+where = ["src"]
+{%- endblock %}
