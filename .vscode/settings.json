@@ -1,5 +1,0 @@
-// This file is used to set the default settings for the workspace.
-// This is a personal preference to include the .vscode folder in the workspace.
-{
-  "python.formatting.provider": "black"
-}

@@ -33,7 +33,7 @@ def main():
         description=dedent(complete.__doc__),
         formatter_class=RawDescriptionHelpFormatter,
     )
-    parser_complete.add_argument("--shell", default="bash").completer = ChoicesCompleter(shells)
+    parser_complete.add_argument("--shell").completer = ChoicesCompleter(shells)
 
     # Run -------------------------------------------------------------------------------------------------------------
     parser_run = parser_child.add_parser(

@@ -1,6 +1,4 @@
-"""
-Gathered data that will not change after its first collected.
-"""
+"""Gathered data that will not change after its first collected."""
 import datetime
 import subprocess
 from importlib.metadata import version
@@ -11,7 +9,13 @@ from jinja2 import Environment, FileSystemLoader
 
 template_path = Path(__file__).with_name("templates")
 
-templates = Environment(loader=FileSystemLoader(template_path))
+templates = Environment(
+    loader=FileSystemLoader(template_path),
+    block_start_string="{§",
+    block_end_string="§}",
+    variable_start_string="{¤",
+    variable_end_string="¤}",
+)
 templates.globals["year"] = datetime.datetime.utcnow().year
 
 licenses = {license.stem: license for license in template_path.joinpath("licenses").glob("*") if license.is_file()}
@@ -26,7 +30,16 @@ with subprocess.Popen(["git", "config", "user.email"], stdout=subprocess.PIPE, e
     email = process.stdout.read().strip()
     # TODO: Add a fallback to the system email if git config is not set
 
-color = choice(["[yellow]█[/yellow]", "[red]█[/red]", "[green]█[/green]", "[blue]█[/blue]", "[magenta]█[/magenta]"])
+color = choice(
+    [
+        "red",
+        "green",
+        "yellow",
+        "blue",
+        "magenta",
+    ]
+)
+ver = "v" + version("incubate")
 logo = f"""
             [grey0 on white]████████[/grey0 on white]
           [grey0 on white]██        ██[/grey0 on white]
@@ -38,12 +51,12 @@ logo = f"""
   [grey0 on white]██      ▒▒▒▒▒▒▒▒▒▒        ██[/grey0 on white]   ██ ██   █ █   ▀  █   █ █ ▀ ▄ █▄▄█     █   ▐█▀▀
   [grey0 on white]██      ▒▒▒▒▒▒▒▒▒▒    ▒▒▒▒██[/grey0 on white]   ▐█ █ █  █ █▄  ▄▀ █   █ █  ▄▀ █  █    █    ▀█▄▄▄▀
   [grey0 on white]██▒▒▒▒  ▒▒▒▒▒▒▒▒▒▒  ▒▒▒▒▒▒██[/grey0 on white]    ▐ █  █ █ ▀███▀  █▄ ▄█  ▀▀      █   ▀
-    [grey0 on white]██▒▒▒▒  ▒▒▒▒▒▒    ▒▒▒▒██[/grey0 on white]        █   ██         ▀▀▀          ▀    [bold cyan]v{version('incubate')}[/bold cyan]
-      [grey0 on white]██▒▒              ██[/grey0 on white]          ▀
+    [grey0 on white]██▒▒▒▒  ▒▒▒▒▒▒    ▒▒▒▒██[/grey0 on white]        █   ██         ▀▀▀          ▀
+      [grey0 on white]██▒▒              ██[/grey0 on white]          ▀              [bold cyan]{ver:>30}[/bold cyan]
         [grey0 on white]████        ████[/grey0 on white]
             [grey0 on white]████████[/grey0 on white]
 """.replace(
-    "▒", color
+    "▒", f"[{color}]█[/{color}]"
 )
 
 if __name__ == "__main__":

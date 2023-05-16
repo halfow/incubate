@@ -1,31 +1,34 @@
+
+{§- block build_system §}
 # -------------------------------------------------------------------------------------------------
 # Build system settings
 # -------------------------------------------------------------------------------------------------
-{%- block build_system %}
 [build-system]
-requires = ["setuptools", "wheel", "setuptools-scm[toml]"]
+requires = ["setuptools-scm[toml]>=7", "setuptools>=65", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
 
 [tool.distutils.bdist_wheel]
 universal = true
 
 [tool.setuptools.packages.find]
 namespaces = false # to disable scanning PEP 420 namespaces (true by default)
-{% endblock %}
+{§- endblock §}
 # -------------------------------------------------------------------------------------------------
 # Build metadata
 # -------------------------------------------------------------------------------------------------
 [project]
-name = "{{ project }}"
-description = "{{ description }}"
+name = "{¤ project ¤}"
+description = "{¤ description ¤}"
 dynamic = ["version"]
 
 requires-python = ">=3.10"
 dependencies = [
-{%- block dependencies %}
-    "argcomplete",
+{§- block dependencies §}
+    "argcomplete>=3",
     "rich",
-{%- endblock %}
+{§- endblock §}
 ]
 
 keywords = ["template"]
@@ -43,7 +46,7 @@ text = "LICENSE"
 
 [project.optional-dependencies]
 dev = [ # Development dependencies
-    {% block development -%}
+    {§ block development -§}
     "black",                      # code formatter
     "coverage_enable_subprocess", # coverage for subprocesses
     "coverage",                   # code coverage
@@ -53,32 +56,31 @@ dev = [ # Development dependencies
     "ruff",                       # code lint/formatter
     "scalene",                    # profiler
     "tox",                        # test runner
-    {%- endblock %}
+    {§- endblock §}
 ]
 
 [project.scripts]
-{% block scripts -%}
-{{ project | replace("_", "-") }} = "{{ project }}.__main__:main"
-{%- endblock %}
+{§ block scripts -§}
+{¤ project | replace("_", "-") ¤} = "{¤ project  | replace('-', '_') ¤}.__main__:main"
+{§- endblock §}
 
 # -------------------------------------------------------------------------------------------------
 # Authors and maintainers
 # -------------------------------------------------------------------------------------------------
 [[project.authors]]
-name = "{{ author }}"
-email = "{{ email }}"
+name = "{¤ author ¤}"
+email = "{¤ email ¤}"
 
 
+
+{§ block tools -§}
 # -------------------------------------------------------------------------------------------------
 # Linter and formatter settings
 # -------------------------------------------------------------------------------------------------
-{% block tools -%}
 [tool.black]
 line-length = 120
 
 [tool.ruff]
 line-length = 120
-select = [{# TODO: add more #}
-    "I001"  # isort
-]
-{%- endblock %}
+select = ["B", "C", "E", "F", "G", "I", "Q", "W", "UP", "PL"]
+{§- endblock §}

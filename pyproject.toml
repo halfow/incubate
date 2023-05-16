@@ -1,8 +1,5 @@
-# -------------------------------------------------------------------------------------------------
-# Build system settings
-# -------------------------------------------------------------------------------------------------
 [build-system]
-requires = ["setuptools", "wheel", "setuptools-scm[toml]"]
+requires = ["setuptools-scm[toml]>=7", "setuptools>=65", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.distutils.bdist_wheel]
@@ -19,9 +16,8 @@ where = ["."]
 exclude = ["test"]
 namespaces = false # to disable scanning PEP 420 namespaces (true by default)
 
-# -------------------------------------------------------------------------------------------------
-# Build metadata
-# -------------------------------------------------------------------------------------------------
+[tool.setuptools_scm]
+
 [project]
 name = "incubate"
 description = ""
@@ -29,11 +25,12 @@ dynamic = ["version"]
 
 requires-python = ">=3.10"
 dependencies = [
-    "rich",
-    "inquirer",
+    "argcomplete>=3",
     "email-validator",
+    "inquirer",
     "jinja2",
     "pre-commit",
+    "rich",
 ]
 
 keywords = ["template"]
@@ -46,8 +43,10 @@ classifiers = [
 ]
 
 [project.license]
-text = "LICENSE"
+file = "LICENSE"
 
+[[project.authors]]
+name = "Benjamin Hallenrud"
 
 [project.optional-dependencies]
 dev = [ # Development dependencies
@@ -61,17 +60,8 @@ dev = [ # Development dependencies
     "tox",                        # test runner
 ]
 
-
 [project.scripts]
 incubate = "incubate.__main__:main"
-
-
-# -------------------------------------------------------------------------------------------------
-# Authors and maintainers
-# -------------------------------------------------------------------------------------------------
-[[project.authors]]
-name = "Benjamin Hallenrud"
-
 
 # -------------------------------------------------------------------------------------------------
 # Linter and formatter settings
@@ -81,6 +71,4 @@ line-length = 120
 
 [tool.ruff]
 line-length = 120
-select = [
-    "I001"  # isort
-]
+select = ["B", "C", "E", "F", "G", "I", "Q", "W", "UP", "PL"]

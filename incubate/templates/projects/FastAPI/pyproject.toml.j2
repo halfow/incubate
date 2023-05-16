@@ -1,18 +1,19 @@
-{% extends "pyproject.toml.j2" %}
+{§ extends "pyproject.toml.j2" §}
 
-{% block build_system %}
-{{ suoer() }}
-where = ["src"]
+{§ block build_system §}
+{¤ super() ¤}
+include = ["app"]
+{§ endblock §}
 
-{% block dependencies %}
+{§ block dependencies §}
     "fastapi",
     "uvicorn",
     "python-jose[cryptography]",
     "passlib[bcrypt]",
     "python-dotenv",
     "python-multipart",
-{% endblock %}
+{§ endblock §}
 
-{% block scripts %}
-{{ project }} = "app.__main__:main"
-{% endblock %}
+{§ block scripts §}
+{¤ project | replace("_", "") ¤} = "app.__main__:main"
+{§ endblock §}

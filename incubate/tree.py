@@ -1,15 +1,11 @@
-"""
-Generate a Tree
-"""
+"""Generate a Tree."""
 from pathlib import Path
 
 from rich.tree import Tree
 
 
 def walk(root, depth: int = 9):
-    """
-    Walk a directory and generate a Tree
-    """
+    """Walk a directory and generate a Tree."""
     tree = Tree(f"📂 {root}")
     stack = [(Path(root), tree)]
     while stack:
@@ -22,7 +18,7 @@ def walk(root, depth: int = 9):
             if child.is_dir():
                 stack.append((child, node.add(f"📁 {child.name}")))
             else:
-                node.add(f"📄[blue] {child.name}")
+                node.add(f"📄[cyan] {child.name}")
 
     return tree
 

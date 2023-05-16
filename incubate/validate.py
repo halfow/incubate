@@ -1,26 +1,25 @@
 from string import ascii_letters, digits
 
-from email_validator import EmailNotValidError, validate_email
+from email_validator import validate_email
 from inquirer import errors
 
 
-def project_name(answers, current):
+def project_name(answers, current: str):
+    bad_end = "_-"
     bad_start = set(digits)
-    bad_start.update("_")
+    bad_start.update(bad_end)
     allowed = set(ascii_letters)
     allowed.update(bad_start)
     checks = [
-        allowed.issuperset(current),
-        current[0] not in bad_start,
-        current[-1] != "_",
+        (lambda x: len(x) > 0, "must not be empty"),
+        (allowed.issuperset, "alphanumeric and '-_' characters are allowed"),
+        (lambda x: x[0] not in bad_start, "may not start with a digit, '-' or '_'"),
+        (lambda x: x[-1] not in bad_end, "may not end with '-' or '_'"),
     ]
-    if all(checks):
-        return True
-
-    raise errors.ValidationError(
-        "",
-        reason="Invalid project name, only [a-zA-Z0-9_] are allowed.]",
-    )
+    for check, reason in checks:
+        if not check(current):
+            raise errors.ValidationError("", f"Invalid project name, {reason}.")
+    return True
 
 
 def email(answers, current):

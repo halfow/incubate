@@ -1,12 +1,11 @@
 import subprocess
 from functools import partial
-from importlib.metadata import version
 from pathlib import Path
 
 import inquirer
 from rich import print
 
-from . import static, tree, validate
+from . import static, theme, tree, validate
 
 
 def main():
@@ -22,7 +21,7 @@ def main():
             # Check if the project name exists already
             inquirer.Confirm(
                 name="confirm",
-                message="The project name already exists, do you want to continue? (This will overwrite existing files)",
+                message="The project name already exists, do you want to continue?",
                 ignore=lambda x: not Path(x["project"]).exists(),
                 default=False,
                 validate=validate.quit,
@@ -53,7 +52,8 @@ def main():
                 choices=static.licenses,
                 default="MIT",
             ),
-        ]
+        ],
+        theme=theme.Omelette,
     )
     if answers is None:
         raise SystemExit(1)
@@ -63,7 +63,7 @@ def main():
     templates = static.templates.list_templates(filter_func=lambda x: x.startswith(f"projects/{project_type}"))
 
     for template in templates:
-        path = Path(static.templates.from_string(template).render(**answers))
+        path = Path(static.templates.from_string(template).render(project=answers["project"].replace("-", "_")))
         new = Path(project_name, *path.parts[2:-1], path.stem)
         if new.exists():
             print(f"[bold yellow]Overwriting[/bold yellow] '{new!s}'")
@@ -75,7 +75,7 @@ def main():
         "Created Project",
         f"[bold magenta]{project_name}[/bold magenta]",
         "from",
-        f"[dim magenta]{project_type}[/dim magenta]",
+        f"[magenta]{project_type}[/magenta]",
         "template",
         tree.walk(project_name),
         "\n",

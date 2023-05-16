@@ -2,7 +2,7 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
-{%- block hooks %}
+{§- block hooks §}
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
@@ -12,22 +12,25 @@ repos:
       - id: file-contents-sorter
         files: ".gitignore"
       - id: trailing-whitespace
+
   - repo: https://github.com/Lucas-C/pre-commit-hooks
     rev: v1.5.1
     hooks:
       - id: remove-tabs
+
   - repo: https://github.com/psf/black
     rev: 23.3.0
     hooks:
       - id: black
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.263
+    rev: v0.0.267
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
+
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.7.1
+    rev: v3.0.0-alpha.9-for-vscode
     hooks:
       - id: prettier
-{%- endblock hooks %}
+{§- endblock hooks §}

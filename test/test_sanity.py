@@ -1,10 +1,10 @@
-""" Sanity tests for pytest. """
+"""Sanity tests for pytest."""
 from pytest import mark
 
 
 @mark.xfail
 def test_fail():
-    assert False
+    raise AssertionError()
 
 
 def test_pass():
