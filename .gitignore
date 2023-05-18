@@ -3,6 +3,7 @@
 *.whl
 .*_cache
 .coverage
+.hypothesis
 .tox
 .venv
 .vscode

@@ -2,22 +2,6 @@
 requires = ["setuptools-scm[toml]>=7", "setuptools>=65", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.distutils.bdist_wheel]
-universal = true
-
-[tool.setuptools]
-include-package-data = true
-
-[tool.setuptools.package-data]
-incubate = ["templates/**/*.j2"]
-
-[tool.setuptools.packages.find]
-where = ["."]
-exclude = ["test"]
-namespaces = false # to disable scanning PEP 420 namespaces (true by default)
-
-[tool.setuptools_scm]
-
 [project]
 name = "incubate"
 description = ""
@@ -58,17 +42,34 @@ dev = [ # Development dependencies
     "ruff",                       # code lint/formatter
     "scalene",                    # profiler
     "tox",                        # test runner
+    "hypothesis",
 ]
 
 [project.scripts]
 incubate = "incubate.__main__:main"
 
-# -------------------------------------------------------------------------------------------------
-# Linter and formatter settings
-# -------------------------------------------------------------------------------------------------
+[tool.distutils.bdist_wheel]
+universal = true
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.package-data]
+incubate = ["templates/**/*.j2"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ["test"]
+namespaces = false # to disable scanning PEP 420 namespaces (true by default)
+
+[tool.setuptools_scm] # Needed for setuptools-scm to work
+
 [tool.black]
 line-length = 120
 
 [tool.ruff]
 line-length = 120
 select = ["B", "C", "E", "F", "G", "I", "Q", "W", "UP", "PL"]
+
+[tool.mypy]
+ignore_missing_imports = true

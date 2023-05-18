@@ -30,4 +30,4 @@ Simply run `incubate` where you want to create a new project. And follow the ins
 - Add user config dir to allow
   - custom templates
   - changes to the default templates
-- Add a way to template "jinja templates"
+- Test FastAPI template by running the server and testing the endpoints

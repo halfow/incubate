@@ -23,22 +23,14 @@ licenses = {license.stem: license for license in template_path.joinpath("license
 projects = {project.stem: project for project in template_path.joinpath("projects").glob("*") if project.is_dir()}
 
 with subprocess.Popen(["git", "config", "user.name"], stdout=subprocess.PIPE, encoding="utf-8") as process:
-    author = process.stdout.read().strip()
+    author = process.communicate()[0].strip()
     # TODO: Add a fallback to the system username if git config is not set
 
 with subprocess.Popen(["git", "config", "user.email"], stdout=subprocess.PIPE, encoding="utf-8") as process:
-    email = process.stdout.read().strip()
+    email = process.communicate()[0].strip()
     # TODO: Add a fallback to the system email if git config is not set
 
-color = choice(
-    [
-        "red",
-        "green",
-        "yellow",
-        "blue",
-        "magenta",
-    ]
-)
+color = choice(["red", "green", "yellow", "blue", "magenta"])
 ver = "v" + version("incubate")
 logo = f"""
             [grey0 on white]████████[/grey0 on white]
