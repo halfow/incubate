@@ -1,0 +1,29 @@
+# TODO
+# on:
+#   push:
+#     branches:
+#       - develop
+# jobs:
+#   test:
+#     name: Test on python ${{ matrix.python-version }} and ${{ matrix.os }}
+#     runs-on: ${{ matrix.os }}
+#     strategy:
+#       matrix:
+#         python-version: ["3.10", "3.11"]
+#         os: [ubuntu-latest, windows-latest, macOS-latest]
+
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: actions/setup-python@v4
+#         with:
+#           python-version: ${{ matrix.python-version }}
+#       - uses: pre-commit/action@v3.0.0
+
+#       - name: Install project
+#         run: pip install .[dev]
+
+#       - name: Run MyPy
+#         run: mypy test incubate
+
+#       - name: Run tests
+#         run: pytest -v

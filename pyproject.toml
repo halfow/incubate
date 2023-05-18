@@ -34,14 +34,8 @@ name = "Benjamin Hallenrud"
 
 [project.optional-dependencies]
 dev = [ # Development dependencies
-    "black",                      # code formatter
-    "coverage_enable_subprocess", # coverage for subprocesses
-    "coverage",                   # code coverage
     "mypy",                       # type checker
     "pytest",                     # test runner
-    "ruff",                       # code lint/formatter
-    "scalene",                    # profiler
-    "tox",                        # test runner
     "hypothesis",
 ]
 
